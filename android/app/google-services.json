@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175894075490",
+    "project_id": "nmootyvegetables-0001",
+    "storage_bucket": "nmootyvegetables-0001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175894075490:android:c1b51c0f47d6802211593b",
+        "android_client_info": {
+          "package_name": "com.example.shopping_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGuupeJf-degj7vd5VD7E0MmuWl9vVwpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
