@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         if (state is RegisteredState) {
           context.goNamed(AppRouteConstants.homeScreen);
         } else if (state is UnRegisteredState) {
-          context.goNamed(AppRouteConstants.otpScreen);
+          context.goNamed(AppRouteConstants.phoneNumberScreen);
         }
       },
       child: Scaffold(

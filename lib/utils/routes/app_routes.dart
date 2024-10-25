@@ -18,12 +18,12 @@ class AppRoutes {
       GoRoute(
         name: AppRouteConstants.phoneNumberScreen,
         path: '/phoneNumberScreen',
-        builder: (context, state) => const PhoneNumberScreen(),
+        builder: (context, state) => PhoneNumberScreen(),
       ),
       GoRoute(
         name: AppRouteConstants.otpScreen,
         path: '/otpScreen',
-        builder: (context, state) => const OtpScreen(),
+        builder: (context, state) => OtpScreen(),
       ),
     ],
   );
