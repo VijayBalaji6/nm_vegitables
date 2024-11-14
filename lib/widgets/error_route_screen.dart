@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
-import 'package:shopping_app/utils/routes/app_route_constant.dart';
+import 'package:shopping_app/utils/routes/app_routes.dart';
 
 class ErrorRouteScreen extends StatelessWidget {
   const ErrorRouteScreen({super.key, required this.errorState});
@@ -27,7 +27,7 @@ class ErrorRouteScreen extends StatelessWidget {
         const SizedBox(height: 16),
         ElevatedButton(
             onPressed: () {
-              context.goNamed(AppRouteConstants.splashScreen);
+              context.goNamed(AppRoutes.splashScreen);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.blackColor,

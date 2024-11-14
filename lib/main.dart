@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/modules/auth/bloc/auth_bloc.dart';
 import 'package:shopping_app/modules/splash/bloc/splash_bloc.dart';
 import 'package:shopping_app/network/repository/auth_repository.dart';
-import 'package:shopping_app/utils/routes/app_routes.dart';
+import 'package:shopping_app/utils/routes/app_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: false,
         child: MaterialApp.router(
-          routerConfig: AppRoutes.appRoutes,
+          routerConfig: AppRouter.appRoutes,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(

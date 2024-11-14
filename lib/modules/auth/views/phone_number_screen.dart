@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/modules/auth/bloc/auth_bloc.dart';
-import 'package:shopping_app/utils/routes/app_route_constant.dart';
+import 'package:shopping_app/utils/routes/app_routes.dart';
 import 'package:shopping_app/widgets/common_app_button.dart';
 import 'package:shopping_app/widgets/common_text_from_field.dart';
 
@@ -70,7 +70,7 @@ class PhoneNumberScreen extends StatelessWidget {
                     context
                         .read<AuthBloc>()
                         .add(PhoneNumberSubmitted(phoneNumberController.text));
-                    context.pushNamed(AppRouteConstants.otpScreen);
+                    context.pushNamed(AppRoutes.otpScreen);
                   },
                 ),
                 const SizedBox(height: 50),
