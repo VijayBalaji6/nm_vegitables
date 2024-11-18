@@ -29,79 +29,81 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, snapshot) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Align(
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(
-                    'assets/images/auth/otp_image.svg',
-                    height: 325,
-                    width: 275,
-                  )),
-              const SizedBox(height: 50),
-              const Text('Enter Verification Code',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 30),
-              const Text('We have sent SMS to:',
-                  style:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
-              const SizedBox(height: 10),
-              const Text('01XXXXXXXXXX',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 20),
-              CommonTextFormField(
-                textFormFieldController: otpTextFieldController,
-                maxLength: 6,
-                emptyMessage: "Enter OTP",
-                focusNode: otpFieldFocus,
-                //onChangeEvent: (String x) => moveToNextField(index, x, context),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: List.generate(otpControllers.length, (index) {
-              //       return SizedBox(
-              //         width: 50,
-              //         height: 50,
-              //         child: CommonTextFormField(
-              //           textFormFieldController: otpControllers[index],
-              //           maxLength: 1,
-              //           emptyMessage: "Enter OTP",
-              //           focusNode: focusNodes[index],
-              //           onChangeEvent: (String x) =>
-              //               moveToNextField(index, x, context),
-              //         ),
-              //       );
-              //     }),
-              //   ),
-              // ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(onPressed: () {}, child: const Text('Resend OTP')),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text('Change Phone Number')),
-                ],
-              ),
-              const Spacer(),
-              CommonAppButton(
-                buttonName: 'Next',
-                buttonIcon: Icons.arrow_right,
-                buttonAction: () {},
-              ),
-              const SizedBox(height: 50),
-            ],
-          );
-        }),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: BlocBuilder<AuthBloc, AuthState>(builder: (context, snapshot) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+             
+                Align(
+                    alignment: Alignment.center,
+                    child: SvgPicture.asset(
+                      'assets/images/auth/otp_image.svg',
+                      height: 325,
+                      width: 275,
+                    )),
+                const SizedBox(height: 50),
+                const Text('Enter Verification Code',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 30),
+                const Text('We have sent SMS to:',
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
+                const SizedBox(height: 10),
+                const Text('01XXXXXXXXXX',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
+                CommonTextFormField(
+                  textFormFieldController: otpTextFieldController,
+                  maxLength: 6,
+                  emptyMessage: "Enter OTP",
+                  focusNode: otpFieldFocus,
+                  //onChangeEvent: (String x) => moveToNextField(index, x, context),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: List.generate(otpControllers.length, (index) {
+                //       return SizedBox(
+                //         width: 50,
+                //         height: 50,
+                //         child: CommonTextFormField(
+                //           textFormFieldController: otpControllers[index],
+                //           maxLength: 1,
+                //           emptyMessage: "Enter OTP",
+                //           focusNode: focusNodes[index],
+                //           onChangeEvent: (String x) =>
+                //               moveToNextField(index, x, context),
+                //         ),
+                //       );
+                //     }),
+                //   ),
+                // ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(onPressed: () {}, child: const Text('Resend OTP')),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text('Change Phone Number')),
+                  ],
+                ),
+                
+                CommonAppButton(
+                  buttonName: 'Next',
+                  buttonIcon: Icons.arrow_right,
+                  buttonAction: () {},
+                ),
+                const SizedBox(height: 50),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
