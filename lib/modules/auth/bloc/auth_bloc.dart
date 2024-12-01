@@ -1,45 +1,81 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_app/models/auth/auth_models.dart';
 import 'package:shopping_app/network/repository/auth_repository.dart';
+import 'package:shopping_app/service_locator.dart';
+import 'package:shopping_app/utils/config/constants/app_enum.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
-  AuthBloc({required this.authRepository}) : super(PhoneNumberInitial()) {
+  final AuthRepository _authRepository = sl<AuthRepository>();
+
+  AuthBloc()
+      : super(PhoneNumberPageState(PhoneNumberState(
+            phoneNumber: '', eventStatus: EventStatus.initial))) {
+    on<PhoneNumberPageInitEvent>(_onPhoneNumberPageInitEvent);
     on<PhoneNumberSubmitted>(_onPhoneNumberSubmitted);
+    on<OtpPageInitEvent>(_onOtpPageInitEvent);
     on<OtpSubmitted>(_onOtpSubmitted);
     on<ResendOtpRequested>(_onResendOtpRequested);
   }
 
-  _onPhoneNumberSubmitted(PhoneNumberSubmitted event, Emitter<AuthState> emit) {
-    emit(PhoneNumberLoading());
-    try {
-      authRepository.createUserGetOtp(phoneNumber: event.phoneNumber);
+  _onPhoneNumberPageInitEvent(
+      PhoneNumberPageInitEvent event, Emitter<AuthState> emit) {
+    emit(PhoneNumberPageState(PhoneNumberState(
+        phoneNumber: event.phoneNumber, eventStatus: EventStatus.initial)));
+  }
 
-      emit(PhoneNumberSuccess());
+  Future<void> _onPhoneNumberSubmitted(
+      PhoneNumberSubmitted event, Emitter<AuthState> emit) async {
+    final PhoneNumberPageState currentState = state as PhoneNumberPageState;
+    emit(PhoneNumberPageState(currentState.phoneNumberState
+        .copyWith(eventStatus: EventStatus.loading, message: "Loading")));
+    try {
+      await _authRepository.loginUserGetOtp(phoneNumber: event.phoneNumber);
+      emit(PhoneNumberPageState(currentState.phoneNumberState
+          .copyWith(eventStatus: EventStatus.success, message: "Success")));
     } catch (e) {
-      emit(PhoneNumberFailure(e.toString()));
+      emit(PhoneNumberPageState(currentState.phoneNumberState
+          .copyWith(eventStatus: EventStatus.failed, message: e.toString())));
     }
   }
 
-  _onOtpSubmitted(OtpSubmitted event, Emitter<AuthState> emit) {
-    emit(OtpLoading());
+  _onOtpPageInitEvent(OtpPageInitEvent event, Emitter<AuthState> emit) {
+    emit(OtpPageState(OtpState(
+        phoneNumber: event.phoneNumber,
+        otp: '',
+        eventStatus: EventStatus.initial)));
+  }
+
+  Future<void> _onOtpSubmitted(
+      OtpSubmitted event, Emitter<AuthState> emit) async {
+    final OtpPageState currentState = state as OtpPageState;
+    emit(OtpPageState(currentState.otpState
+        .copyWith(eventStatus: EventStatus.loading, message: "Loading")));
     try {
-      authRepository.loginWithOtp(
+      await _authRepository.loginWithOtp(
           phoneNumber: event.phoneNumber, token: event.otp);
-      emit(OtpSuccess());
+      emit(OtpPageState(currentState.otpState
+          .copyWith(eventStatus: EventStatus.success, message: "Success")));
     } catch (e) {
-      emit(OtpFailure(e.toString()));
+      emit(OtpPageState(currentState.otpState
+          .copyWith(eventStatus: EventStatus.failed, message: e.toString())));
     }
   }
 
   _onResendOtpRequested(ResendOtpRequested event, Emitter<AuthState> emit) {
+    final OtpPageState currentState = state as OtpPageState;
+    emit(OtpPageState(currentState.otpState
+        .copyWith(eventStatus: EventStatus.loading, message: "Loading")));
     try {
-      emit(PhoneNumberLoading());
+      _authRepository.createUserGetOtp(phoneNumber: event.phoneNumber);
+      emit(OtpPageState(currentState.otpState
+          .copyWith(eventStatus: EventStatus.success, message: "Loading")));
     } catch (e) {
-      emit(PhoneNumberFailure(e.toString()));
+      emit(OtpPageState(currentState.otpState
+          .copyWith(eventStatus: EventStatus.failed, message: "Loading")));
     }
   }
 }

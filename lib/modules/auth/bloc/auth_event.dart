@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'auth_bloc.dart';
 
 sealed class AuthEvent extends Equatable {
@@ -7,11 +8,29 @@ sealed class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class PhoneNumberPageInitEvent extends AuthEvent {
+  final String phoneNumber;
+  const PhoneNumberPageInitEvent({
+    required this.phoneNumber,
+  });
+  @override
+  List<Object> get props => [phoneNumber];
+}
+
 class PhoneNumberSubmitted extends AuthEvent {
   final String phoneNumber;
 
   const PhoneNumberSubmitted(this.phoneNumber);
 
+  @override
+  List<Object> get props => [phoneNumber];
+}
+
+class OtpPageInitEvent extends AuthEvent {
+  final String phoneNumber;
+  const OtpPageInitEvent({
+    required this.phoneNumber,
+  });
   @override
   List<Object> get props => [phoneNumber];
 }

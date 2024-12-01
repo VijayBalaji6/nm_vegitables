@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shopping_app/utils/constants/colors.dart';
-import 'package:shopping_app/utils/routes/app_routes.dart';
+import 'package:shopping_app/utils/config/constants/colors.dart';
+import 'package:shopping_app/utils/config/routes/app_routes.dart';
 
 class ErrorRouteScreen extends StatelessWidget {
   const ErrorRouteScreen({super.key, required this.errorState});

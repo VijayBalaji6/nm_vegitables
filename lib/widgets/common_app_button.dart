@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_app/utils/constants/colors.dart';
+import 'package:shopping_app/utils/config/constants/colors.dart';
 
 class CommonAppButton extends StatelessWidget {
   const CommonAppButton(

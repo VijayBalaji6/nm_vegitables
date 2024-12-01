@@ -1,8 +1,9 @@
 import 'package:shopping_app/network/services/auth_services.dart';
+import 'package:shopping_app/service_locator.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthRepository {
-  Future<User?> checkIsUserLoggedIn();
+  User? checkIsUserLoggedIn();
   Future<void> createUserGetOtp({
     required String phoneNumber,
   });
@@ -18,16 +19,26 @@ abstract class AuthRepository {
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl();
 
+  final AuthServiceRepository _authService = sl<AuthServiceRepository>();
+
   @override
   Future<void> createUserGetOtp({required String phoneNumber}) async {
-    await AuthService.getOtpForSignIn(phoneNumber);
+    try {
+      await _authService.getOtpForSignIn(phoneNumber);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<void> loginUserGetOtp({
     required String phoneNumber,
   }) async {
-    await AuthService.getOtpForLogin(phoneNumber);
+    try {
+      await _authService.getOtpForLogin(phoneNumber);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -35,11 +46,19 @@ class AuthRepositoryImpl implements AuthRepository {
     required String phoneNumber,
     required String token,
   }) async {
-    await AuthService.loginWithOtp(token: token, phone: phoneNumber);
+    try {
+      await _authService.loginWithOtp(token: token, phone: phoneNumber);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
-  Future<User?> checkIsUserLoggedIn() async {
-    return await AuthService.checkAuth();
+  User? checkIsUserLoggedIn() {
+    try {
+      return _authService.checkAuth();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

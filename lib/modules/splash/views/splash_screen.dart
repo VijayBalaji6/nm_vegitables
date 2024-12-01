@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/modules/splash/bloc/splash_bloc.dart';
-import 'package:shopping_app/utils/routes/app_routes.dart';
+import 'package:shopping_app/utils/config/routes/app_routes.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

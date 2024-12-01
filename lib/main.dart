@@ -6,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/modules/auth/bloc/auth_bloc.dart';
 import 'package:shopping_app/modules/splash/bloc/splash_bloc.dart';
-import 'package:shopping_app/network/repository/auth_repository.dart';
-import 'package:shopping_app/utils/routes/app_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shopping_app/service_locator.dart';
+import 'package:shopping_app/utils/config/routes/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,31 +18,21 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  String supaBaseKey =
-      await rootBundle.loadString('assets/supa_base_key/supa_base_key.json');
-  Map<String, dynamic> supaBaseKeysData = json.decode(supaBaseKey);
-  await Supabase.initialize(
-    url: supaBaseKeysData['apiUrl'],
-    anonKey: supaBaseKeysData['apiKey'],
-  );
+  await setupServiceLocator();
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final AuthRepository authRepository = AuthRepositoryImpl();
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SplashBloc>(
             create: (BuildContext context) =>
-                SplashBloc(authRepository: authRepository)
-                  ..add(CheckIsUserRegisteredEvent())),
-        BlocProvider<AuthBloc>(
-            create: (BuildContext context) =>
-                AuthBloc(authRepository: authRepository)),
+                SplashBloc()..add(CheckIsUserRegisteredEvent())),
+        BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

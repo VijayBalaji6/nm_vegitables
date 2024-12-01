@@ -7,34 +7,18 @@ sealed class AuthState extends Equatable {
   List<Object> get props => [];
 }
 
-class PhoneNumberInitial extends AuthState {}
-
-class PhoneNumberLoading extends AuthState {}
-
-class PhoneNumberSuccess extends AuthState {}
-
-class PhoneNumberFailure extends AuthState {
-  final String error;
-
-  const PhoneNumberFailure(this.error);
-
+class PhoneNumberPageState extends AuthState {
+  final PhoneNumberState phoneNumberState;
+  const PhoneNumberPageState(this.phoneNumberState);
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [phoneNumberState];
 }
 
-class OtpInitial extends AuthState {}
-
-class OtpLoading extends AuthState {}
-
-class OtpSuccess extends AuthState {}
-
-class OtpFailure extends AuthState {
-  final String error;
-
-  const OtpFailure(this.error);
-
+class OtpPageState extends AuthState {
+  final OtpState otpState;
+  const OtpPageState(this.otpState);
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [otpState];
 }
 
 final class UserDetailSubmissionState extends AuthState {}

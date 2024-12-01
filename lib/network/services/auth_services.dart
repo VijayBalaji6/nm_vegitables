@@ -1,22 +1,32 @@
+import 'package:shopping_app/service_locator.dart';
+import 'package:shopping_app/utils/config/api_base/supabase_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthService {
-  static final supabase = Supabase.instance.client;
+abstract class AuthServiceRepository {
+  User? checkAuth();
+  Future<bool> loginWithOtp({required String token, required String phone});
+  Future<void> getOtpForSignIn(String phone);
+  Future<void> getOtpForLogin(String phone);
+}
 
-  static Future<User?> checkAuth() async {
-    final Session? session = supabase.auth.currentSession;
+class AuthServiceImp extends AuthServiceRepository {
+  final SupabaseClient supabaseClient = sl<SupabaseManager>().supabaseClient;
+  @override
+  User? checkAuth() {
+    final Session? session = supabaseClient.auth.currentSession;
 
     if (session != null) {
-      return supabase.auth.currentUser;
+      return supabaseClient.auth.currentUser;
     } else {
       return null;
     }
   }
 
-  static Future<bool> loginWithOtp(
+  @override
+  Future<bool> loginWithOtp(
       {required String token, required String phone}) async {
     try {
-      await supabase.auth.verifyOTP(
+      await supabaseClient.auth.verifyOTP(
         type: OtpType.sms,
         token: token,
         phone: phone,
@@ -27,10 +37,11 @@ class AuthService {
     }
   }
 
-  static Future<void> getOtpForSignIn(String phone) async {
+  @override
+  Future<void> getOtpForSignIn(String phone) async {
     try {
-      await supabase.auth.signInWithOtp(
-        phone: phone,
+      await supabaseClient.auth.signInWithOtp(
+        phone: "+91 $phone",
         shouldCreateUser: true,
       );
     } catch (e) {
@@ -38,10 +49,11 @@ class AuthService {
     }
   }
 
-  static Future<void> getOtpForLogin(String phone) async {
+  @override
+  Future<void> getOtpForLogin(String phone) async {
     try {
-      await supabase.auth.signInWithOtp(
-        phone: phone,
+      await supabaseClient.auth.signInWithOtp(
+        phone: "+91 $phone",
         shouldCreateUser: false,
       );
     } catch (e) {
