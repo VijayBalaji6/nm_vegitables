@@ -23,8 +23,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onPhoneNumberPageInitEvent(
       PhoneNumberPageInitEvent event, Emitter<AuthState> emit) {
-    emit(PhoneNumberPageState(PhoneNumberState(
-        phoneNumber: event.phoneNumber, eventStatus: EventStatus.initial)));
+    if (state is PhoneNumberPageState) {
+      final currentState = state as PhoneNumberPageState;
+
+      // Emit a new state with the updated phone number
+      emit(PhoneNumberPageState(
+        currentState.phoneNumberState.copyWith(
+          phoneNumber: event.phoneNumber,
+        ),
+      ));
+    }
   }
 
   Future<void> _onPhoneNumberSubmitted(

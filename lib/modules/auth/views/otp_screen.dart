@@ -37,7 +37,7 @@ class OtpScreen extends StatelessWidget {
                 }
               }
             }, builder: (context, state) {
-              final AuthBloc _authBloc = context.read<AuthBloc>();
+              final AuthBloc authBloc = context.read<AuthBloc>();
               final OtpState currentState = (state as OtpPageState).otpState;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class OtpScreen extends StatelessWidget {
                           onPressed: () {}, child: const Text('Resend OTP')),
                       TextButton(
                           onPressed: () {
-                            _authBloc.add(PhoneNumberPageInitEvent(
+                            authBloc.add(PhoneNumberPageInitEvent(
                                 phoneNumber: currentState.phoneNumber));
                             context.pop();
                           },
@@ -90,7 +90,7 @@ class OtpScreen extends StatelessWidget {
                     buttonName: 'Next',
                     buttonIcon: Icons.arrow_right,
                     buttonAction: () {
-                      _authBloc.add(OtpSubmitted(
+                      authBloc.add(OtpSubmitted(
                         otpTextFieldController.text,
                         currentState.phoneNumber,
                       ));

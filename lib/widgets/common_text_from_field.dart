@@ -32,7 +32,8 @@ class CommonTextFormField extends StatelessWidget {
       controller: textFormFieldController,
       focusNode: focusNode,
       maxLength: maxLength,
-      onChanged: (value) => onChangeEvent,
+      onChanged: (value) =>
+          onChangeEvent != null ? onChangeEvent!(value) : null,
       decoration: InputDecoration(
         filled: true,
         labelText: labelName,
