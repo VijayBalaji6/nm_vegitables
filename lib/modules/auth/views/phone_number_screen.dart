@@ -40,68 +40,72 @@ class PhoneNumberScreen extends StatelessWidget {
                 }
               }
             }, builder: (context, state) {
-              final PhoneNumberState currentState =
-                  (state as PhoneNumberPageState).phoneNumberState;
+              if (state is PhoneNumberPageState) {
+                final PhoneNumberState currentState = state.phoneNumberState;
 
-              return Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: SvgPicture.asset(
-                        'assets/images/auth/phone_number_image.svg',
-                        height: 300,
+                return Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: SvgPicture.asset(
+                          'assets/images/auth/phone_number_image.svg',
+                          height: 300,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Enter your mobile number',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Enter your mobile number',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'We need to verify you. We will send you a one time verification code.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
+                      const SizedBox(height: 10),
+                      const Text(
+                        'We need to verify you. We will send you a one time verification code.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    CommonTextFormField(
-                      maxLength: 10,
-                      textFormFieldController: phoneNumberController
-                        ..text = currentState.phoneNumber,
-                      keyboardType: TextInputType.phone,
-                      labelName: 'Phone Number',
-                      prefixIcon: Icons.phone,
-                      emptyMessage: "Enter Phone Number",
-                      onChangeEvent: (String phoneNumber) {
-                        context.read<AuthBloc>().add(
-                            PhoneNumberPageInitEvent(phoneNumber: phoneNumber));
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    CommonAppButton(
-                      buttonName: 'Next',
-                      buttonIcon: Icons.arrow_right,
-                      buttonAction: currentState.phoneNumber.length == 10
-                          ? () async {
-                              context.read<AuthBloc>().add(PhoneNumberSubmitted(
-                                  phoneNumberController.text));
-                            }
-                          : null,
-                    ),
-                    const SizedBox(height: 50),
-                  ],
-                ),
-              );
+                      const SizedBox(height: 20),
+                      CommonTextFormField(
+                        maxLength: 10,
+                        textFormFieldController: phoneNumberController
+                          ..text = currentState.phoneNumber,
+                        keyboardType: TextInputType.phone,
+                        labelName: 'Phone Number',
+                        prefixIcon: Icons.phone,
+                        emptyMessage: "Enter Phone Number",
+                        onChangeEvent: (String phoneNumber) {
+                          context.read<AuthBloc>().add(PhoneNumberPageInitEvent(
+                              phoneNumber: phoneNumber));
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      CommonAppButton(
+                        buttonName: 'Next',
+                        buttonIcon: Icons.arrow_right,
+                        buttonAction: currentState.phoneNumber.length == 10
+                            ? () async {
+                                context.read<AuthBloc>().add(
+                                    PhoneNumberSubmitted(
+                                        phoneNumberController.text));
+                              }
+                            : null,
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
+                );
+              } else {
+                return SizedBox();
+              }
             }),
           ),
         ),
