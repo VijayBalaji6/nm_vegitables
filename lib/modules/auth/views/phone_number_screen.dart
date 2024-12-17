@@ -29,7 +29,7 @@ class PhoneNumberScreen extends StatelessWidget {
                   case EventStatus.success:
                     {
                       context.read<AuthBloc>().add(OtpPageInitEvent(
-                          phoneNumber: phoneNumberController.text));
+                          phoneNumber: phoneNumberController.text, otp: ''));
                       context.pushNamed(AppRoutes.otpScreen);
                     }
                     break;

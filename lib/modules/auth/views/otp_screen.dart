@@ -22,7 +22,7 @@ class OtpScreen extends StatelessWidget {
           switch (state.otpState.eventStatus) {
             case EventStatus.success:
               {
-                context.pushNamed(AppRoutes.homeScreen);
+                context.pushNamed(AppRoutes.dashboardScreen);
               }
               break;
             case EventStatus.failed:
@@ -75,7 +75,11 @@ class OtpScreen extends StatelessWidget {
                         emptyMessage: "Enter OTP",
                         focusNode: otpFieldFocus,
                         keyboardType: TextInputType.numberWithOptions(),
-                        //onChangeEvent: (String x) => moveToNextField(index, x, context),
+                        onChangeEvent: (String x) => context
+                            .read<AuthBloc>()
+                            .add(OtpPageInitEvent(
+                                phoneNumber: currentState.phoneNumber,
+                                otp: otpTextFieldController.text)),
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -96,12 +100,14 @@ class OtpScreen extends StatelessWidget {
                       CommonAppButton(
                         buttonName: 'Next',
                         buttonIcon: Icons.arrow_right,
-                        buttonAction: () {
-                          context.read<AuthBloc>().add(OtpSubmitted(
-                                otpTextFieldController.text,
-                                currentState.phoneNumber,
-                              ));
-                        },
+                        buttonAction: state.otpState.otp.length > 5
+                            ? () {
+                                context.read<AuthBloc>().add(OtpSubmitted(
+                                      otpTextFieldController.text,
+                                      currentState.phoneNumber,
+                                    ));
+                              }
+                            : null,
                       ),
                       const SizedBox(height: 50),
                     ],

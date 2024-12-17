@@ -28,8 +28,10 @@ class PhoneNumberSubmitted extends AuthEvent {
 
 class OtpPageInitEvent extends AuthEvent {
   final String phoneNumber;
+  final String? otp;
   const OtpPageInitEvent({
     required this.phoneNumber,
+    required this.otp
   });
   @override
   List<Object> get props => [phoneNumber];

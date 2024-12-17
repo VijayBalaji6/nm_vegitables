@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (BuildContext context, state) {
         if (state is RegisteredState) {
-          context.goNamed(AppRoutes.homeScreen);
+          context.goNamed(AppRoutes.dashboardScreen);
         } else if (state is UnRegisteredState) {
           context.goNamed(AppRoutes.phoneNumberScreen);
         }

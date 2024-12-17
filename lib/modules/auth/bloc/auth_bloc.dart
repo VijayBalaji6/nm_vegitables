@@ -53,10 +53,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _onOtpPageInitEvent(OtpPageInitEvent event, Emitter<AuthState> emit) {
-    emit(OtpPageState(OtpState(
-        phoneNumber: event.phoneNumber,
-        otp: '',
-        eventStatus: EventStatus.initial)));
+    try {
+      if (state is OtpPageState) {
+        final currentState = state as OtpPageState;
+        emit(OtpPageState(currentState.otpState.copyWith(otp: event.otp)));
+      } else {
+        emit(OtpPageState(OtpState(
+            phoneNumber: event.phoneNumber,
+            otp: '',
+            eventStatus: EventStatus.initial)));
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> _onOtpSubmitted(
